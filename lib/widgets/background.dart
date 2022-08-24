@@ -14,10 +14,7 @@ class HomeBackground extends StatelessWidget {
       child: Stack(
         children: [
           PurpleBox(),
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.only(top: 20),
-          ),
+
           child, //Widget
         ],
       ),
@@ -25,19 +22,38 @@ class HomeBackground extends StatelessWidget {
   }
 }
 
-class PurpleBox extends StatelessWidget {
+class PurpleBox extends StatefulWidget {
   const PurpleBox({Key? key}) : super(key: key);
 
+  @override
+  State<PurpleBox> createState() => _PurpleBoxState();
+}
+
+class _PurpleBoxState extends State<PurpleBox> with TickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<Offset> _animation;
   BoxDecoration boxDecoration()
   {
     return const BoxDecoration(
         gradient: LinearGradient(
             colors: [
-              Color.fromRGBO(63, 63, 156, 1),
-              Color.fromRGBO(90, 70, 178, 1),
+              Color.fromRGBO(204, 66, 63, 1),
+              Color.fromRGBO(246, 155, 172, 0.4),
             ]
         )
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 1400));
+    _animation = Tween<Offset>(begin: Offset(0.5, 0.5), end: Offset.zero)
+        .animate(_animationController);
+    _animationController.forward().whenComplete(() {
+      // when animation completes, put your code here
+    });
   }
 
   @override
@@ -48,13 +64,19 @@ class PurpleBox extends StatelessWidget {
     return Container(
       decoration: boxDecoration(),
       width: double.infinity,
-      height: size.height * 0.4,
+      height: size.height * 0.225,
       child: Stack(
         children: [
           Positioned(
-            child: Image(
-              image: AssetImage("assets/images/pokeball.png"),
-              width: 200,
+            child: SlideTransition(
+              position: _animation,
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 0),
+                child: Image(
+                  image: AssetImage("assets/images/pokeball.png"),
+                  width: 200,
+                ),
+              ),
             ),
             left: 250,
             top: -20,
