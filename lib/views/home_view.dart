@@ -13,12 +13,12 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
 
   String dropdownvalue = "pokemon";
-  var items = [
-    'pokemon',
-    'moves',
-    'abilities',
-    'item',
-    "berry",
+  List<_SearchFields> items = [
+    _SearchFields('pokemon', Icons.sports_baseball_rounded),
+    _SearchFields('moves', Icons.disc_full_rounded),
+    _SearchFields('abilities', Icons.sports_handball),
+    _SearchFields('item', Icons.fastfood_rounded),
+    _SearchFields("berry", Icons.apple),
   ];
 
   @override
@@ -46,14 +46,39 @@ class _HomeViewState extends State<HomeView> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 60,),
+                  SizedBox(height: 78,),
                   DropdownButtonFormField(
+                    decoration: InputDecoration(
+                      constraints: BoxConstraints(
+                        maxHeight: 60,
+                        maxWidth: 160
+                      ),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide(color: AppTheme.primary)
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide(color: AppTheme.primary)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide(color: AppTheme.primary)
+                      ),
+                      hintText: "Choose search category",
+                      labelText: "Choose search category",
+                      hintStyle: TextStyle(
+                        color: AppTheme.secondary,
+                      ),
+                      labelStyle: TextStyle(
+                        color: AppTheme.secondary,
+                      ),
+                    ),
                     value: "pokemon",
-                    icon: const Icon(Icons.keyboard_arrow_down),
-                    items: items.map((String items) {
+                    items: items.map((_SearchFields items) {
                       return DropdownMenuItem(
-                        value: items,
-                        child: Row(children: [Icon(Icons.ac_unit), Text(items)],),
+                        value: items.name,
+                        child: Row(children: [Icon(items.icon), SizedBox(width: 6), Text(items.name)],),
                       );
                     }).toList(),
                     // After selecting the desired option,it will
@@ -85,6 +110,16 @@ class _HomeViewState extends State<HomeView> {
   }
 }
 
+class _SearchFields
+{
+  final String name;
+  final IconData icon;
+
+  _SearchFields(this.name, this.icon);
+
+
+}
+
 class _FeatureButtons extends StatelessWidget {
   const _FeatureButtons({Key? key}) : super(key: key);
 
@@ -96,13 +131,13 @@ class _FeatureButtons extends StatelessWidget {
           children: [
             _StyledButton(
                 text: "Pokedex",
-                image_path: "assets/images/pokeball.png",
+                image_path: "assets/images/master.png",
                 color: Color.fromRGBO(79, 193, 166, 1)
             ),
             SizedBox(width: 6,),
             _StyledButton(
                 text: "Moves",
-                image_path: "assets/images/pokeball.png",
+                image_path: "assets/images/ultra.png",
                 color: Color.fromRGBO(247, 119, 106, 1)
             ),
           ],
@@ -112,13 +147,13 @@ class _FeatureButtons extends StatelessWidget {
           children: [
             _StyledButton(
                 text: "Abilities",
-                image_path: "assets/images/pokeball.png",
+                image_path: "assets/images/poke3.png",
                 color: Color.fromRGBO(88, 169, 244, 1)
             ),
             SizedBox(width: 6,),
             _StyledButton(
                 text: "Items",
-                image_path: "assets/images/pokeball.png",
+                image_path: "assets/images/poke2.png",
                 color: Color.fromRGBO(255, 206, 75, 1)
             ),
           ],
@@ -128,13 +163,13 @@ class _FeatureButtons extends StatelessWidget {
           children: [
             _StyledButton(
                 text: "Locations",
-                image_path: "assets/images/pokeball.png",
+                image_path: "assets/images/poke4.png",
                 color: Color.fromRGBO(124, 82, 140, 1)
             ),
             SizedBox(width: 6,),
             _StyledButton(
                 text: "Type Charts",
-                image_path: "assets/images/pokeball.png",
+                image_path: "assets/images/poke5.png",
                 color: Color.fromRGBO(176, 115, 109, 1)
             ),
           ],
